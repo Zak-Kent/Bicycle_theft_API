@@ -9,6 +9,6 @@ class BikeParkingSerializer(gis_serializer.GeoModelSerializer):
             'degx',
             'degy',
             'bilinear_score',
-            'geom',
             )
         model = models.BicycleParkingPdx
+        geo_field = 'geom'

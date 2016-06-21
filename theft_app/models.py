@@ -23,8 +23,8 @@ class BicycleParkingPdx(models.Model):
     degx = models.FloatField(blank=True, null=True)
     degy = models.FloatField(blank=True, null=True)
     geom = models.GeometryField(srid=srid)
-    rack_score = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
-    bilinear_score = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    rack_score = models.DecimalField(max_digits=12, decimal_places=12, blank=True, null=True)
+    bilinear_score = models.DecimalField(max_digits=12, decimal_places=12, blank=True, null=True)
 
     class Meta:
         managed = False
