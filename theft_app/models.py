@@ -30,6 +30,12 @@ class BicycleParkingPdx(models.Model):
         managed = False
         db_table = 'bicycle_parking_pdx'
 
+    def save(self, *args, **kwargs):
+     return
+
+    def delete(self, *args, **kwargs):
+         return
+
 
 class TheftGrid(models.Model):
     geom = models.GeometryField(srid=srid)
@@ -46,3 +52,9 @@ class TheftGrid(models.Model):
     class Meta:
         managed = False
         db_table = 'theft_grid'
+
+    def save(self, *args, **kwargs):
+     return
+
+    def delete(self, *args, **kwargs):
+         return
