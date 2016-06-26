@@ -32,15 +32,17 @@ class UnManagedModelTestRunner(DiscoverRunner):
 
 if 'test' in sys.argv or 'test_coverage' in sys.argv:  # Covers regular testing and django-coverage
  
-    DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
     DATABASES['default']['NAME'] = project_config.default['NAME']
     DATABASES['default']['USER'] = project_config.default['USER']
     DATABASES['default']['PASSWORD'] = project_config.default['PASSWORD']
+    DATABASES['default']['PORT'] = ''
  
-    DATABASES['legacy']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
+    DATABASES['legacy']['ENGINE'] = 'django.db.backends.sqlite3'
     DATABASES['legacy']['NAME'] = project_config.legacy['NAME']
     DATABASES['legacy']['USER'] = project_config.legacy['USER']
     DATABASES['legacy']['PASSWORD'] = project_config.legacy['PASSWORD']
+    DATABASES['legacy']['PORT'] = ''
 
 # The custom routers we're using to route certain ORM queries
 # to the remote host conflict with our overridden db settings.

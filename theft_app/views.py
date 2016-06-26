@@ -7,11 +7,17 @@ from . import serializers
 
 class ListRacks(APIView):
     def get(self, request, format=None):
-        rack = models.BicycleParkingPdx.objects.get(gid=10)
+        rack = models.BicycleParkingPdx.objects.all()
         serializer = serializers.BikeParkingSerializer(rack)
         return Response(serializer.data)
 
 
+class LocateRacks(APIView):
+    def get(self, request, **kwargs):
+        self.lati = self.kwargs['lati']
+        self.longi = self.kwargs['longi']
+
+        return Response((self.lati, self.longi))
 
 
 
