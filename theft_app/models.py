@@ -20,7 +20,7 @@ class BicycleParkingPdx(models.Model):
     gid = models.AutoField(primary_key=True)
     degx = models.FloatField(blank=True, null=True)
     degy = models.FloatField(blank=True, null=True)
-    geom = models.GeometryField(srid=srid)
+    geom = models.PointField(srid=srid)
     bilinear_score = models.DecimalField(max_digits=12, decimal_places=12, blank=True, null=True)
     objects = models.GeoManager() 
 
