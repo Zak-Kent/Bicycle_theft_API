@@ -12,7 +12,7 @@ from django.contrib.gis.measure import D # shortcut for distance
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.db import models
 
-srid = 4324
+srid = 4326
 
 
 
@@ -22,6 +22,7 @@ class BicycleParkingPdx(models.Model):
     degy = models.FloatField(blank=True, null=True)
     geom = models.GeometryField(srid=srid)
     bilinear_score = models.DecimalField(max_digits=12, decimal_places=12, blank=True, null=True)
+    objects = models.GeoManager() 
 
     class Meta:
         managed = False
@@ -34,7 +35,7 @@ class BicycleParkingPdx(models.Model):
          return
 
     def __unicode__(self):
-        return self.gid 
+        return (self.gid, self.geom) 
 
 
 class TheftGrid(models.Model):

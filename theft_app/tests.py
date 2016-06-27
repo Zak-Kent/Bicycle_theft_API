@@ -3,35 +3,25 @@ from rest_framework.test import APITestCase
 #from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.test import Client 
+from factories import BicycleParkingFactory
 
 from . import models 
 from . import serializers
 from . import views 
 
 
-class ViewResponseTest(APITestCase):
-    @classmethod
-    def setUpTestData(self):
-        self.data = models.BicycleParkingPdx.objects.create(**{'degy': 45.521292, 'degx': -122.656744, 
-            'gid': 10, 'bilinear_score': 0.8812073629861754, 
-            'geom': '01010000E0E610000076C7CD1808AA5EC06D3400AFB9C2464000000000000000000000000000000000'})
-
-    # def create_object(self):
-    #     self.data = models.BicycleParkingPdx.objects.create(**{'degy': 45.521292, 'degx': -122.656744, 
-    #         'gid': 10, 'bilinear_score': 0.8812073629861754, 
-    #         'geom': '01010000E0E610000076C7CD1808AA5EC06D3400AFB9C2464000000000000000000000000000000000'})
-
-    #     return self.data
+class ViewResponseTest(APITestCase): 
 
     def test_object_creation(self): 
-        self.test_obj = self.data
+        self.test_obj = BicycleParkingFactory()
 
         self.assertEqual(self.test_obj.__unicode__(), self.test_obj.gid)
         self.assertEqual(self.test_obj.bilinear_score, 0.8812073629861754)
         self.assertTrue(isinstance(self.test_obj, models.BicycleParkingPdx))
 
     def test_view_returns_json_response(self):
-        self.test_obj = self.data
+        self.test_obj = BicycleParkingFactory()
+        self.test_obj.save()
         self.client = Client()
 
         url = reverse('theft_app:rack_list')
