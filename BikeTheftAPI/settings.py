@@ -147,7 +147,12 @@ REST_FRAMEWORK = {
         ),
     'DEFAULT_PERMISSIONS_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-        )
+        ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+
 }
 
 #TEST_RUNNER = 'BikeTheftAPI.test_settings.UnManagedModelTestRunner'

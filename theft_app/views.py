@@ -1,9 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from django.contrib.gis.geos import *
-from django.contrib.gis.measure import D
-
 from services import Location_info
 from . import models
 from . import serializers 
@@ -12,27 +9,41 @@ from . import serializers
 class ListRacks(APIView):
     def get(self, request, format=None):
         rack = models.BicycleParkingPdx.objects.all()
-        serializer = serializers.BikeParkingSerializer(rack)
+        serializer = serializers.BikeParkingSerializer(rack, many=True)
         return Response(serializer.data)
 
 
 class LocateRacks(APIView):
 
     def get(self, request, format=None, **kwargs):
-        self.lati = float(self.kwargs['lati'])
-        self.longi = float(self.kwargs['longi'])
-        self.dist = self.kwargs.get('dist', '30')
+        self.lati = self.kwargs['lati']
+        self.longi = self.kwargs['longi']
+        self.dist = self.kwargs['disti']
 
-        location_service = Location_info(self.lati, self.longi)
+        print "!" * 60 
+        print self.dist, self.lati, self.longi
+        print "!" * 60 
 
-        racks = location_service.racks_within_distance(600)
+        location_service = Location_info(self.lati, self.longi, self.dist)
 
+        racks = location_service.racks_within_distance()
 
-        # self.point = GEOSGeometry('Point({} {})'.format(self.lati, self.longi), srid=4326)
+        return Response(racks)
 
-        # self.test = models.BicycleParkingPdx.objects.filter(geom__distance_lt=(self.point, self.dist))
-        # #self.test = models.BicycleParkingPdx.objects.get(gid=10)
-        #serializer = serializers.BikeParkingSerializer(racks, many=True)
+class LocateRacksDefault(APIView):
+
+    def get(self, request, format=None, **kwargs):
+        self.lati = self.kwargs['lati']
+        self.longi = self.kwargs['longi']
+        self.dist = 50
+
+        print "!" * 60 
+        print self.dist, self.lati, self.longi
+        print "!" * 60 
+
+        location_service = Location_info(self.lati, self.longi, self.dist)
+
+        racks = location_service.racks_within_distance()
 
         return Response(racks)
 
