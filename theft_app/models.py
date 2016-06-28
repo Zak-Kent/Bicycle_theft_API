@@ -35,7 +35,7 @@ class BicycleParkingPdx(models.Model):
          return
 
     def __unicode__(self):
-        return (self.gid, self.geom) 
+        return (self.gid) 
 
 
 class TheftGrid(models.Model):
