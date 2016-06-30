@@ -1,13 +1,6 @@
 from django.db import connections 
 
-from models import BicycleParkingPdx 
-from serializers import BikeParkingSerializer
-
-from django.core import serializers
-
 import logging
-
-
 
 class Location_info:
     """take users lat/long and create an object that has methods to return their interpolated score and a list of 

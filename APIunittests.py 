@@ -59,6 +59,12 @@ class URLEndpointTests(unittest.TestCase):
         response = self.helper_API_get(500, 45524433, -122.677825)
         self.assertEqual(response.status_code, 404)
 
+        response = self.helper_API_get(500, 45.524433, -122677825)
+        self.assertEqual(response.status_code, 404)
+
+        response = self.helper_API_get(500, 45, -122)
+        self.assertEqual(response.status_code, 404)
+
 
 
 

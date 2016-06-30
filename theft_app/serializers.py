@@ -4,6 +4,7 @@ from rest_framework_gis import serializers as gis_serializer
 
 
 class BikeParkingSerializer(gis_serializer.GeoModelSerializer):
+
     class Meta:
         fields = (
             'gid',
@@ -13,3 +14,4 @@ class BikeParkingSerializer(gis_serializer.GeoModelSerializer):
             )
         model = models.BicycleParkingPdx
         geo_field = 'geom'
+

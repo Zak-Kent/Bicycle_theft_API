@@ -9,24 +9,27 @@ from __future__ import unicode_literals
 
 #from django.db import models
 from django.contrib.gis.measure import D # shortcut for distance
-from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.gis.geos import fromstr
 from django.contrib.gis.db import models
 
 srid = 4326
-
-
 
 class BicycleParkingPdx(models.Model):
     gid = models.AutoField(primary_key=True)
     degx = models.FloatField(blank=True, null=True)
     degy = models.FloatField(blank=True, null=True)
-    geom = models.PointField(srid=srid)
-    bilinear_score = models.DecimalField(max_digits=12, decimal_places=12, blank=True, null=True)
+    geom = models.GeometryField(srid=srid)
+    bilinear_score = models.DecimalField(max_digits=12, decimal_places=8, blank=True, null=True)
     objects = models.GeoManager() 
 
     class Meta:
         managed = False
         db_table = 'bicycle_parking_pdx'
+
+    def dist_search(self, **kwargs):
+        pnt = fromstr('POINT(-122.692025 45.527440)', srid=4326)
+        return pnt
+
 
     def save(self, *args, **kwargs):
      return
@@ -34,8 +37,8 @@ class BicycleParkingPdx(models.Model):
     def delete(self, *args, **kwargs):
          return
 
-    def __unicode__(self):
-        return (self.gid) 
+    # def __unicode__(self):
+    #     return (self.gid) 
 
 
 class TheftGrid(models.Model):
