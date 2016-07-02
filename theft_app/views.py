@@ -6,16 +6,11 @@ from . import models
 from . import serializers 
 
 #------------------------------------------------------------------
-
-from django.contrib.gis.measure import D
-from django.contrib.gis.geos import fromstr
 from rest_framework_gis.filters import DistanceToPointFilter
-
 from rest_framework import generics
 
 
 class ListRacks(generics.ListAPIView):
-
     queryset = models.BicycleParkingPdx.objects.all()
     serializer_class = serializers.BikeParkingSerializer
     distance_filter_field = 'geom'

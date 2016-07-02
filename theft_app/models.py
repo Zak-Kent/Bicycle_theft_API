@@ -26,11 +26,6 @@ class BicycleParkingPdx(models.Model):
         managed = False
         db_table = 'bicycle_parking_pdx'
 
-    def dist_search(self, **kwargs):
-        pnt = fromstr('POINT(-122.692025 45.527440)', srid=4326)
-        return pnt
-
-
     def save(self, *args, **kwargs):
      return
 

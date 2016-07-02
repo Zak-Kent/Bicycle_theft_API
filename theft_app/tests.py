@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from rest_framework.test import APIClient
 from rest_framework.test import APIRequestFactory
 
-from factories import BicycleParkingFactory
+#from factories import BicycleParkingFactory
 from . import models 
 from . import serializers
 from . import views 
@@ -43,13 +43,12 @@ class UrlParamsTest(APITestCase):
     
     def test_get_user_lat_long(self):
         self.client = APIClient()
-        url = reverse('theft_app:locate_racks', kwargs={'lati':5.555, 'longi':5.5555})
-        self.assertEqual(url, '/api/v1/racks/5.555,5.5555')
+        url = reverse('theft_app:rack_list')
+        self.assertEqual(url, '/api/v1/racks/')
 
         resp = self.client.get(url)
 
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(resp.data, ('5.555', '5.5555'))
 
     def test_get_user_dist_lat_long(self): 
         pass
