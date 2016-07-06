@@ -139,6 +139,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
 # REST Framework 
 
 REST_FRAMEWORK = {
@@ -153,6 +154,10 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
 
+}
+
+REST_FRAMEWORK_DOCS = {
+    'HIDE_DOCS': False  # Default: False
 }
 
 #TEST_RUNNER = 'BikeTheftAPI.test_settings.UnManagedModelTestRunner'
