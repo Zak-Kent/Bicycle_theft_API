@@ -160,4 +160,4 @@ REST_FRAMEWORK_DOCS = {
     'HIDE_DOCS': False  # Default: False
 }
 
-#TEST_RUNNER = 'BikeTheftAPI.test_settings.UnManagedModelTestRunner'
+
