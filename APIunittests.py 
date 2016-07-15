@@ -30,7 +30,7 @@ class URLRestgisEndpointTests(unittest.TestCase):
         self.assertEqual(len(json), 1)
         self.assertEqual(response.status_code, 200)
 
-    def test_restgis_API_get_all_racks(self):
+    def test_base_url_response_returns_all_racks(self):
         response = requests.get(self.restgis_url_base) 
         json = response.json() 
         # 6746 total number of racks in DB
@@ -43,6 +43,16 @@ class URLRestgisEndpointTests(unittest.TestCase):
 
         self.assertEqual(len(json), 19)
         self.assertEqual(response.status_code, 200) 
+
+    def test_out_of_region_search_no_results(self):
+        response = self.helper_API_get(50, -122.873805, 45.629905)
+        json = response.json()
+
+        self.assertEqual(len(json), 0)
+        self.assertEqual(response.status_code, 200)
+
+
+
 
 
 if __name__ == '__main__':
