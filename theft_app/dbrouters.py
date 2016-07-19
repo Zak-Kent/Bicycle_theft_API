@@ -12,7 +12,7 @@ class BikeTheftRouter:
         return 'default'
     
     def allow_relation(self, obj1, obj2, **hints):
-        "Allow any relation if a both models in chinook app"
+        "Allow any relation if both models in theft app or both not"
         if obj1._meta.app_label == 'theft_app' and obj2._meta.app_label == 'theft_app':
             return True
         # Allow if neither is Portland_bike_theft app

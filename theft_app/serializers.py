@@ -6,10 +6,10 @@ class BikeParkingSerializer(gis_serializer.GeoModelSerializer):
 
     class Meta:
         fields = (
-            'gid',
-            'degx',
-            'degy',
-            'bilinear_score',
+            'id',
+            'longitude',
+            'latitude',
+            'theft_prob_per_bike_day_x_1000',
             )
         model = models.BicycleParkingPdx
         geo_field = 'geom'

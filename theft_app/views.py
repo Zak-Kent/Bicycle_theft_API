@@ -25,10 +25,7 @@ class ListRacks(generics.ListAPIView):
     filter_backends = (DistanceToPointFilter, )
     distance_filter_convert_meters = True
 
-    # pagination still seems to be broken 
-    #pagination_class = GeoJsonPagination
-
-
+    
 
 
 

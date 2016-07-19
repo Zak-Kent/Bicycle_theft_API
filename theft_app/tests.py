@@ -3,7 +3,6 @@ from django.core.urlresolvers import reverse
 from rest_framework.test import APIClient
 from rest_framework.test import APIRequestFactory
 
-from factories import BicycleParkingFactory
 from . import models 
 from . import serializers
 from . import views 
@@ -54,7 +53,7 @@ from . import views
 class TestAPIResponse(APITestCase):
 
     def setUp(self):
-        models.BicycleParkingPdx.create(gid = 10,
+        models.BicycleParkingPdx.objects.create(gid = 10,
             degx = -122.656744,
             degy = 45.521292,
             geom = '01010000E0E610000076C7CD1808AA5EC06D3400AFB9C2464000000000000000000000000000000000',
