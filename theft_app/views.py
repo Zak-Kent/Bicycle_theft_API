@@ -1,6 +1,9 @@
 from rest_framework_gis.filters import DistanceToPointFilter
-from rest_framework_gis.pagination import GeoJsonPagination
 from rest_framework import generics
+
+from django.contrib.gis.geos import Point
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from . import models
 from . import serializers 
@@ -25,7 +28,39 @@ class ListRacks(generics.ListAPIView):
     filter_backends = (DistanceToPointFilter, )
     distance_filter_convert_meters = True
 
-    
+# ----------------------------------------------------------------------
+
+
+class ClosestDist(generics.ListAPIView):
+    """Endpoint takes lat/long cords and returns  """
+    serializer_class = serializers.BikeParkingSerializer
+
+    def get_queryset(self):
+        point = self.get_filter_point(self.request)
+        # dist = request.query_params.get('dist', None)
+
+        bike_racks = models.BicycleParkingPdx.objects.distance(point).order_by('distance')[:30]
+
+        return bike_racks
+
+    def get_filter_point(self, request):
+        """grab point out of query string and make a geos point"""
+        point_param = 'point'
+        point_string = request.query_params.get(point_param, None)
+        
+        if not point_string:
+            return None
+
+        try:
+            (x, y) = (float(n) for n in point_string.split(','))
+        except ValueError:
+            raise ParseError('Invalid geometry string supplied for parameter {0}'.format(self.point_param))
+
+        point_string = Point(x, y, 4326)    
+
+        return point_string
+
+  
 
 
 

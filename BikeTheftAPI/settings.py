@@ -86,20 +86,20 @@ DATABASES = {
         'NAME': project_config.default['NAME'],
         'USER': project_config.default['USER'],
         'PASSWORD': project_config.default['PASSWORD'],
-        'PORT': '',
+        'PORT': ''
     },
-    'legacy': {
-        'ENGINE': project_config.legacy['ENGINE'],
-        'NAME': project_config.legacy['NAME'],
-        'USER': project_config.legacy['USER'],
-        'PASSWORD': project_config.legacy['PASSWORD'],
-        'PORT': '',
-    }
+    # 'legacy': {
+    #     'ENGINE': project_config.legacy['ENGINE'],
+    #     'NAME': project_config.legacy['NAME'],
+    #     'USER': project_config.legacy['USER'],
+    #     'PASSWORD': project_config.legacy['PASSWORD'],
+    #     'PORT': ''
+    # }
 }
 
 # Database router for legacyDB
 
-DATABASE_ROUTERS = ['theft_app.dbrouters.BikeTheftRouter']
+# DATABASE_ROUTERS = ['theft_app.dbrouters.BikeTheftRouter']
 
 
 # Password validation
@@ -144,6 +144,7 @@ STATIC_URL = '/static/'
 # REST Framework 
 
 REST_FRAMEWORK = {
+    'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         ),
@@ -162,10 +163,9 @@ REST_FRAMEWORK_DOCS = {
 }
 
 SWAGGER_SETTINGS = {
-    'api_path': '/api/v1/',
     'relative_paths': False,
     'info': {
-    'contact': 'apiteam@wordnik.com',
+    'contact': 'zak.kent@gmail.com',
     'description': 'This is a sample server Petstore server. '
                    'You can find out more about Swagger at '
                    '<a href="http://swagger.wordnik.com">'

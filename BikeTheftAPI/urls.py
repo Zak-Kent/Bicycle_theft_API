@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^api/v1/racks/', include('theft_app.urls', 
                             namespace='theft_app')),
     url(r'^api/v1/', include('rest_framework_swagger.urls')),
+
 ]
