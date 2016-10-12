@@ -32,14 +32,21 @@ class ListRacks(generics.ListAPIView):
 
 
 class ClosestDist(generics.ListAPIView):
-    """Endpoint takes lat/long cords and returns  """
+    """Endpoint takes number of racks lat/long coords and returns a sorted list 
+        of racks by distance equal to the number provied. 
+        
+        Ex. http://localhost:8000/api/v1/racks/sorted/?racks=50&point=-122.678713,45.514798
+        will return 50 racks sorted by distance of the lat/lng point provied"""
+
     serializer_class = serializers.BikeParkingSerializer
 
-    def get_queryset(self):
-        point = self.get_filter_point(self.request)
-        # dist = request.query_params.get('dist', None)
 
-        bike_racks = models.BicycleParkingPdx.objects.distance(point).order_by('distance')[:30]
+    def get_queryset(self):
+        """get lat/lng point object and number of racks and return num of sorted racks by closest dist"""
+        point = self.get_filter_point(self.request)
+        num_racks = self.request.query_params.get('racks', 30)    
+
+        bike_racks = models.BicycleParkingPdx.objects.distance(point).order_by('distance')[:num_racks]
 
         return bike_racks
 
