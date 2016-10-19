@@ -2,11 +2,14 @@ from rest_framework_gis.filters import DistanceToPointFilter
 from rest_framework import generics
 
 from django.contrib.gis.geos import Point
+from django.contrib.gis.measure import D
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from . import models
 from . import serializers 
+
+import time 
 
 class ListRacks(generics.ListAPIView):
     """
@@ -43,21 +46,27 @@ class ClosestDist(generics.ListAPIView):
 
     def get_queryset(self):
         """get lat/lng point object and number of racks and return num of sorted racks by closest dist"""
+
+        radial_dist = .01
         point = self.get_filter_point(self.request)
         num_racks = self.request.query_params.get('racks', 30)    
 
-        bike_racks = models.BicycleParkingPdx.objects.distance(point).order_by('distance')[:num_racks]
+        bike_racks = self.distance_orderer(num_racks, radial_dist, point)
+
+        # if nothing returned increase search distance before returning results 
+        while len(bike_racks) <= 25:
+            radial_dist += .1
+            bike_racks = self.distance_orderer(num_racks, radial_dist, point)
 
         return bike_racks
 
     def get_filter_point(self, request):
         """grab point out of query string and make a geos point"""
-        point_param = 'point'
-        point_string = request.query_params.get(point_param, None)
+
+        point_string = request.query_params.get('point', None)
         
         if not point_string:
             return None
-
         try:
             (x, y) = (float(n) for n in point_string.split(','))
         except ValueError:
@@ -66,6 +75,13 @@ class ClosestDist(generics.ListAPIView):
         point_string = Point(x, y, 4326)    
 
         return point_string
+
+    def distance_orderer(self, num_racks, radial_dist, point):
+        """helper method to adjust search distance incase no results returned on first try"""
+
+        bike_racks = models.BicycleParkingPdx.objects.filter(geom__dwithin=(point, radial_dist)).distance(point).order_by('distance')[:num_racks]
+
+        return bike_racks
 
   
 
